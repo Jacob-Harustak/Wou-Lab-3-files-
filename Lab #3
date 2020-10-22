@@ -1,0 +1,59 @@
+"""
+Created on Sat Oct 17 14:31:44 2020
+
+@author: Jacob Harustak
+"""
+
+file_name = 'file1.txt'
+
+my_dict = {}
+
+with open(file_name, 'r') as x:
+    
+    show = x.readlines()
+    
+    for i in range(0, len(show) - 1, 2):
+        
+        if show[i].strip()=='':continue
+            
+        years = show[i].strip()
+        name = show[i+1].strip()
+            
+        if years in my_dict.keys():
+                
+            name_list = my_dict.get(years)
+            name_list.append(name)
+            name_list.sort()
+                
+        else:
+                
+            my_dict[years] = [name]
+            print(years, name)
+
+
+output_keys ='output_keys.txt'
+output_titles ='output_titles.txt'
+
+print('\n')
+            
+with open(output_keys, 'w+') as out_key:
+    
+    for key in sorted(my_dict.keys()):
+        
+        out_key.write('{}: {}\n'.format(key,'; '.join(my_dict.get(key))))
+        print('{}: {}\n'.format(key,'; '.join(my_dict.get(key))))
+        
+
+print('\n')
+
+title_list = []
+
+for title in my_dict.values():
+    title_list.extend(title)
+
+with open(output_titles, 'w+') as out_title:
+    
+    for title in sorted(title_list):
+            out_title.write('{}\n'.format(title))
+            print(title)
+
